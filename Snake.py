@@ -8,6 +8,7 @@
 # add variants
 # make snake go in diagonals?
 # make game over screen
+# main menu
 
 import tkinter as tk, random as rd, time as tm
 
@@ -39,6 +40,7 @@ def draw():
     global game_canvas
     game_canvas.config(width=SIDE_LEN, height=SIDE_LEN)
     game_canvas.delete("all")
+    game_canvas.create_text(SIDE_LEN//2, SIDE_LEN//2, text = str(snake_length - 1), font=("Courier new", 350, "bold"), fill="#D0D0D0")
     if PRNT_GRID:
         for line in range(SIDE_LEN//TILE_SIZE):
             # iterates creating the vertical lines
@@ -46,9 +48,9 @@ def draw():
         for line in range(SIDE_LEN//TILE_SIZE):
             # create the horizontal lines
             game_canvas.create_line(0, line * TILE_SIZE, SIDE_LEN, line*TILE_SIZE, width = LINE_WID)
-    for index in snake:
-        ind_row, ind_col = index[0], index[1]
-        game_canvas.create_rectangle(ind_row - 10, ind_col - 10, (ind_row + TILE_SIZE//2), (ind_col + TILE_SIZE//2), fill="green")
+    for index, item in enumerate(snake):
+        ind_row, ind_col = item[0], item[1]
+        game_canvas.create_rectangle(ind_row - 10, ind_col - 10, (ind_row + TILE_SIZE//2), (ind_col + TILE_SIZE//2), fill=(f"#{(hex(0)[2:]):02}{hex(max(255 - index * 2, 0))[2:]:02}{hex(0)[2:]:02}"))
     game_canvas.create_rectangle(apple[0] - 10, apple[1] - 10, (apple[0] + TILE_SIZE//2), (apple[1] + TILE_SIZE//2), fill="red")
     game_canvas.update()
     game_canvas.pack()
